@@ -1,0 +1,5 @@
+<% require 'json' %>
+
+<% @players.each do |player| %>
+  <%= @player.to_json %>
+ <% end %>

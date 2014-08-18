@@ -1,0 +1,16 @@
+<div id="page-wrap">      
+<h1 align="center">2015 Fantasy Football Draft Board</h1>
+    
+<div id="create_teams" align="center">    
+  <h3 >Enter Teams By Draft Order</h3>
+  <form  onSubmit="return addTeam(this);"> Team Name: <input type='text' name='team_name'> <input type="submit" value="Add Team"></form>
+  <button  onclick="beginDraft();">Start Draft</button>
+</div>
+    
+<div align="center" id="fantasy_teams"></div>
+<div align="center" id="available_picks"></div>    
+<div align="center" id="draft_picks"></div>
+     
+<button  onclick="initializePlayers();">test</button>
+<p id='test'></p>     
+</div>     
