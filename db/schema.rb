@@ -13,17 +13,8 @@
 
 ActiveRecord::Schema.define(version: 20140818022721) do
 
-  create_table "allplayers", force: true do |t|
-    t.string "name"
-    t.string "position"
-    t.string "team"
-  end
-
-  create_table "allplayers2", id: false, force: true do |t|
-    t.string "name"
-    t.string "position"
-    t.string "team"
-  end
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "players", force: true do |t|
     t.string   "name"
@@ -34,7 +25,7 @@ ActiveRecord::Schema.define(version: 20140818022721) do
     t.integer  "team_id"
   end
 
-  add_index "players", ["team_id"], name: "index_players_on_team_id"
+  add_index "players", ["team_id"], name: "index_players_on_team_id", using: :btree
 
   create_table "teams", force: true do |t|
     t.string   "owner"
