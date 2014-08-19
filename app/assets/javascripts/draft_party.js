@@ -19,17 +19,17 @@ function initializePlayers()
         for (var i in json_obj) 
         {
             if(json_obj[i].position == "QB")
-                quarterBacks.push(json_obj[i].name);
+                quarterBacks.push(json_obj[i]);
             else if(json_obj[i].position === "RB")
-                runningBacks.push(json_obj[i].name);
+                runningBacks.push(json_obj[i]);
             else if(json_obj[i].position === "WR")
-                wideRecievers.push(json_obj[i].name);
+                wideRecievers.push(json_obj[i]);
             else if(json_obj[i].position === "TE")
-                tightEnds.push(json_obj[i].name);
+                tightEnds.push(json_obj[i]);
             else if(json_obj[i].position === "DEF")
-                defenses.push(json_obj[i].name);
+                defenses.push(json_obj[i]);
             else if(json_obj[i].position === "K")   
-                kickers.push(json_obj[i].name);
+                kickers.push(json_obj[i]);
 
         } 
     });
@@ -121,9 +121,9 @@ function onSubmit(index,position)
 
 
 
-function updateDraftPicks(name)
+function updateDraftPicks(player)
 {
-    draftPicks.push(name);
+    draftPicks.push(player);
 
     var text ="<h3>Drafted Players:</h3> <table class='ftsy_teams_table'><tr><th colspan=\"100\">Draft Picks</th></tr><tr>";
 
@@ -141,9 +141,9 @@ function updateDraftPicks(name)
         var row=i%10;
 
         if(rows[row]==null)
-            rows[row]="<td>"+pickNo+"</td><td>"+draftPicks[i]+"</td>";
+            rows[row]="<td>"+pickNo+"</td><td>"+draftPicks[i].name+"</td>";
         else
-            rows[row]+="<td>"+pickNo+"</td><td>"+draftPicks[i]+"</td>";
+            rows[row]+="<td>"+pickNo+"</td><td>"+draftPicks[i].name+"</td>";
     }
 
     for(var j=0; j<rows.length; j++)
@@ -168,7 +168,7 @@ function updateDraftPicks(name)
 
 function onSelection(name, index, position)
 {
-    document.getElementById("submit_selection").innerHTML="Current Selection: " +name + "<button onClick=\"onSubmit("+index+","+position+")\">Submit</button>";      
+    document.getElementById("submit_selection").innerHTML="Current Selection: " + name + "<button onClick=\"onSubmit("+index+","+position+")\">Submit</button>";      
 }
 
 
@@ -213,7 +213,7 @@ function updateAvailablePlayers(obj_id, position)
             text+="<tr class=\"alt\">";
         else
             text+="<tr>";
-        text+="<td onmouseover=\"this.bgColor='#99FF33'\" onmouseout=\"this.bgColor='white'\"  onClick=\"onSelection('"+players[i]+"',"+i+","+position+");\">"+players[i]+"</td></tr>";
+        text+="<td onmouseover=\"this.bgColor='#99FF33'\" onmouseout=\"this.bgColor='white'\"  onClick=\"onSelection('"+players[i].name+"',"+i+","+position+");\">"+players[i].name+"</td></tr>";
     }
 
     text+="</tbody></table>";
@@ -222,9 +222,9 @@ function updateAvailablePlayers(obj_id, position)
 }
 
 
-function updateTeam(name, position)
+function updateTeam(player, position)
 {
-    teamDraftList[currentTeam].push({pos:position, name:name});
+    teamDraftList[currentTeam].push(player);
     document.getElementById("team"+currentTeam.toString()).innerHTML= listTeam(fantasyTeams[currentTeam], teamDraftList[currentTeam]);
 }
 
@@ -259,7 +259,7 @@ function listTeam(coach, players)
             text+="<tr class=\"alt\">";
         else
             text+="<tr>";
-        text+="<td>"+pickNo+"</td><td>"+players[i].pos+"</td><td>"+players[i].name+"</td></tr>";
+        text+="<td>"+pickNo+"</td><td>"+players[i].position+"</td><td>"+players[i].name+"</td></tr>";
     }
 
     text+="</table>";
