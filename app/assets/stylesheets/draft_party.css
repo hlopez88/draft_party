@@ -38,7 +38,13 @@ tr.alt td {
     text-decoration: underline;
     cursor: pointer;
 }
-.scrollable-table tbody { height:300px; overflow-y:scroll;}
+
+.scrollable_tbody
+{ 
+    display:block;
+    height:300px;
+    overflow-y:scroll;
+}
 
 
 body
