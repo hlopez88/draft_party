@@ -1,10 +1,9 @@
 DraftApp::Application.routes.draw do
   
-  resources :teams 
-  
-  resources:players
-  
-  
+  resources :teams
+  resources :players
+  resources :picks
+   
   get "players/index"
   get "teams/index"
   # The priority is based upon order of creation: first created -> highest priority.
