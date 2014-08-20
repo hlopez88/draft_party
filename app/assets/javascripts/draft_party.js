@@ -10,6 +10,8 @@ var teamDraftList = [];
 var draftPicks = [];
 var currentTeam =0;
 var snakeUp=true;
+var timeLeft=300;
+var resetTimer=false;
 
 function initializePlayers()
 {
@@ -35,6 +37,36 @@ function initializePlayers()
     });
 }
 
+function initializeTeams()
+{
+    $.get("/teams.json",function(json_obj,status)
+          {
+              for(var i in json_obj)
+              {
+                  
+              }
+          });
+}
+
+function startTime(remainingTime) 
+{
+    if(resetTimer==true)
+    { 
+        remainingTime=timeLeft;
+        resetTimer=false;
+    }
+    
+    $('#timer').text("Betta Have My Money When I Come To Collect!!: "+remainingTime+"s");
+
+    if(remainingTime==0)
+    {   
+        alert("Take As Shot BRO!!");
+        remainingTime=timeLeft;
+    }
+    
+    setTimeout(function(){startTime(remainingTime-1)},1000);
+}
+
 function beginDraft()
 {
     document.getElementById("available_picks").innerHTML="<h3>Available Picks:</h3><p id=\"submit_selection\"></p> <table><tr><td valign=\"top\" id=\"availQBs\"></td><td valign=\"top\" id=\"availRBs\"></td><td valign=\"top\" id=\"availWRs\"></td><td valign=\"top\" id=\"availTEs\"></td><td valign=\"top\" id=\"availDEs\"></td><td valign=\"top\" id=\"availKs\"></td></tr></table>";
@@ -49,6 +81,7 @@ function beginDraft()
     $("#available_picks").hide().show(1000);
 
     $("#create_teams").hide(1000);
+    startTime(timeLeft);
 }
 
 function addTeam(frm)
@@ -99,7 +132,8 @@ function onSubmit(index,position)
 
     players.splice(index,1);
     updateAvailablePlayers("avail"+pos+"s",position);
-
+    resetTimer=true;
+    
     if(snakeUp)
     {
         if(++currentTeam == fantasyTeams.length)
@@ -248,9 +282,9 @@ function listTeams()
 }
 
 
-function listTeam(coach, players)
+function listTeam(teamName, players)
 {
-    var text ="<table class='ftsy_teams_table'><tr><th colspan=\"3\">"+coach+"</th></tr><tr><th>No.</th><th>Position</th><th>Name</th></tr>";
+    var text ="<table class='ftsy_teams_table'><tr><th colspan=\"3\">"+teamName+"</th></tr><tr><th>No.</th><th>Position</th><th>Name</th></tr>";
     for(var i in players)
     {
         var pickNo=parseInt(i)+1;
