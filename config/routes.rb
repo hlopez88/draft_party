@@ -1,5 +1,5 @@
 DraftApp::Application.routes.draw do
-  
+
   resources :teams
   resources :players
   resources :picks
