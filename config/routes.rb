@@ -1,5 +1,6 @@
 DraftApp::Application.routes.draw do
   
+  get "picks/new"
   resources :teams
   resources :players
   resources :picks
