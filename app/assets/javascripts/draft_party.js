@@ -14,24 +14,53 @@ var timeLeft=300;
 var resetTimer=false;
 
 
+var numberOfTeams=0;
+function addTeam(frm)
+{
+    if(frm.team_name.value=="")
+        return false;
+
+    numberOfTeams++;
+  
+    postAddTeam(frm.team_name.value, numberOfTeams);
+    
+   
+    frm.reset();
+    listTeams();
+    return false;
+}
+
 function postAddTeam(name, draftPosition)
 {
-    
+    var success = function (data, status, jqXHR) {
+                    console.log(status+" "+JSON.stringify(data));    
+                    fantasyTeams.push(data);};
+ 
     var postData={"fantasy_team":{"team_name":name,"draft_position":draftPosition}};
-    
-    $.post('/fantasy_teams.json', 
+ 
+/*     $.post('/fantasy_teams.json', 
            postData, 
            function (data, status, jqXHR) 
             {
                 console.log(status+" "+JSON.stringify(data));
                 
-                return data;
+                fantasyTeams.push(data);
             },
            'json').fail(function(jqXHR,status, errorThown)
                         {
                             alert(xhr.status);
                             alert(thrownError);
-                        });
+                        });*/
+    $.ajax({
+        type: 'POST',
+        url: '/fantasy_teams.json',
+        data: postData,
+        success: success,
+        dataType: 'json',
+        async: false});
+        
+    event.preventDefault();
+
 }
 
 function initializePlayers()
@@ -105,22 +134,7 @@ function beginDraft()
     startTime(timeLeft);
 }
 
-var numberOfTeams=0;
-function addTeam(frm)
-{
-    if(frm.team_name.value=="")
-        return false;
 
-    numberOfTeams++;
-  
-    var team=postAddTeam(frm.team_name.value, numberOfTeams);
-    
-   
-    fantasyTeams.push(team);
-    frm.reset();
-    listTeams();
-    return false;
-}
 
 function onSubmit(index,position)
 {
@@ -309,9 +323,11 @@ function listTeams()
 }
 
 
-function listTeam(team, players)
+function listTeam(ftsy_team, players)
 {
-    var text ="<table class='ftsy_teams_table'><tr><th colspan=\"3\">"+team.team_name+"</th></tr><tr><th>No.</th><th>Position</th><th>Name</th></tr>";
+    console.log(JSON.stringify(ftsy_team));
+    
+    var text ="<table class='ftsy_teams_table'><tr><th colspan=\"3\">"+ftsy_team.team_name+"</th></tr><tr><th>No.</th><th>Position</th><th>Name</th></tr>";
     for(var i in players)
     {
         var pickNo=parseInt(i)+1;
