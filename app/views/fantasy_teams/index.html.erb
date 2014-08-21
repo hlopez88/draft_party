@@ -1,0 +1,29 @@
+<h1>Listing fantasy_teams</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Team name</th>
+      <th>Draft position</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @fantasy_teams.each do |fantasy_team| %>
+      <tr>
+        <td><%= fantasy_team.team_name %></td>
+        <td><%= fantasy_team.draft_position %></td>
+        <td><%= link_to 'Show', fantasy_team %></td>
+        <td><%= link_to 'Edit', edit_fantasy_team_path(fantasy_team) %></td>
+        <td><%= link_to 'Destroy', fantasy_team, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Fantasy team', new_fantasy_team_path %>

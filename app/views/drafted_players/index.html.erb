@@ -1,0 +1,31 @@
+<h1>Listing drafted_players</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Player</th>
+      <th>Team</th>
+      <th>Draft no</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @drafted_players.each do |drafted_player| %>
+      <tr>
+        <td><%= drafted_player.player_id %></td>
+        <td><%= drafted_player.team_id %></td>
+        <td><%= drafted_player.draft_no %></td>
+        <td><%= link_to 'Show', drafted_player %></td>
+        <td><%= link_to 'Edit', edit_drafted_player_path(drafted_player) %></td>
+        <td><%= link_to 'Destroy', drafted_player, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Drafted player', new_drafted_player_path %>

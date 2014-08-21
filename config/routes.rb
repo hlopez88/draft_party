@@ -1,5 +1,9 @@
 DraftApp::Application.routes.draw do
   
+  resources :fantasy_teams
+
+  resources :drafted_players
+
   get "picks/new"
 
   resources :teams

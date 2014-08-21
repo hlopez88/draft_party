@@ -13,6 +13,27 @@ var snakeUp=true;
 var timeLeft=300;
 var resetTimer=false;
 
+
+function postAddTeam(name, draftPosition)
+{
+    
+    var postData={"fantasy_team":{"team_name":name,"draft_position":draftPosition}};
+    
+    $.post('/fantasy_teams.json', 
+           postData, 
+           function (data, status, jqXHR) 
+            {
+                console.log(status+" "+JSON.stringify(data));
+                
+                return data;
+            },
+           'json').fail(function(jqXHR,status, errorThown)
+                        {
+                            alert(xhr.status);
+                            alert(thrownError);
+                        });
+}
+
 function initializePlayers()
 {
     $.get("/players.json",function(json_obj,status)
@@ -84,12 +105,18 @@ function beginDraft()
     startTime(timeLeft);
 }
 
+var numberOfTeams=0;
 function addTeam(frm)
 {
     if(frm.team_name.value=="")
         return false;
 
-    fantasyTeams.push(frm.team_name.value);
+    numberOfTeams++;
+  
+    var team=postAddTeam(frm.team_name.value, numberOfTeams);
+    
+   
+    fantasyTeams.push(team);
     frm.reset();
     listTeams();
     return false;
@@ -282,9 +309,9 @@ function listTeams()
 }
 
 
-function listTeam(teamName, players)
+function listTeam(team, players)
 {
-    var text ="<table class='ftsy_teams_table'><tr><th colspan=\"3\">"+teamName+"</th></tr><tr><th>No.</th><th>Position</th><th>Name</th></tr>";
+    var text ="<table class='ftsy_teams_table'><tr><th colspan=\"3\">"+team.team_name+"</th></tr><tr><th>No.</th><th>Position</th><th>Name</th></tr>";
     for(var i in players)
     {
         var pickNo=parseInt(i)+1;
